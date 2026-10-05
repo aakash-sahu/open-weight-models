@@ -1,0 +1,38 @@
+batch_size: 1
+checkpointer:
+  _component_: torchtune.training.FullModelMetaCheckpointer
+  checkpoint_dir: /Users/aakashsahu/Desktop/learning/open-weight-models/models/Llama-3.2-1B-Instruct
+  checkpoint_files:
+  - meta_model_0.pt
+  model_type: LLAMA3_2
+  output_dir: /Users/aakashsahu/Desktop/learning/open-weight-models/models/finetune_results
+
+output_dir: /Users/aakashsahu/Desktop/learning/open-weight-models/models/finetune_results
+compile: false
+dataset:
+  _component_: torchtune.datasets.instruct_dataset
+  column_map:
+    input: instruction
+    output: intent
+  data_files: /Users/aakashsahu/Desktop/learning/open-weight-models/datasets/customer_intent.dataset
+  max_seq_len: 512
+  source: arrow
+device: mps
+dtype: fp32
+epochs: 2
+gradient_accumulation_steps: 4
+max_steps_per_epoch: null
+model:
+  _component_: torchtune.models.llama3_2.llama3_2_1b
+optimizer:
+  _component_: torch.optim.AdamW
+  lr: 3.0e-05
+
+profiler:
+  _component_: torchtune.training.setup_torch_profiler
+  enabled: false
+resume_from_checkpoint: false
+seed: 42
+metric_logger:
+  _component_: torchtune.training.metric_logging.DiskLogger
+  log_dir: /Users/aakashsahu/Desktop/learning/open-weight-models/logs

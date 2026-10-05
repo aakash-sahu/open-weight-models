@@ -8,6 +8,12 @@ __pycache__/
 
 # repo specific 
 models/*
+datasets/*
+logs/*
+adapters
+llama.cpp
+my_custom_config.py
+my_mac_config.yaml
 
 # Distribution / packaging
 .Python
